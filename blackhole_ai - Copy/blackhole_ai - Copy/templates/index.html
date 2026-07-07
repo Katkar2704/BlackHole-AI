@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackHole AI | Intelligence Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="flex flex-col h-screen bg-black text-white">
+    
+    <!-- Header -->
+    <header class="p-4 border-b border-gray-900 flex justify-between items-center bg-black/90 backdrop-blur-xl sticky top-0 z-[1000]">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.6)] animate-pulse"></div>
+            <div>
+                <h1 class="text-xl font-bold text-white tracking-tighter">BLACKHOLE <span class="text-blue-500">AI</span></h1>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest">Architect: Harshal Barge</p>
+            </div>
+        </div>
+        <div class="hidden sm:flex gap-4 text-xs text-gray-400">
+            <span><i class="fas fa-bolt text-yellow-500 mr-1"></i> Groq LPU</span>
+            <span><i class="fas fa-shield-alt text-blue-500 mr-1"></i> BBD Company</span>
+        </div>
+    </header>
+
+    <!-- Chat Viewport -->
+    <main id="messages" class="flex-1 overflow-y-auto p-4 space-y-8 max-w-5xl mx-auto w-full pb-44">
+        <!-- Messages will be injected here -->
+    </main>
+
+    <!-- BlackHole Loading Animation -->
+    <div id="blackhole-loader" class="hidden fixed bottom-40 left-1/2 -translate-x-1/2 z-[500] flex flex-col items-center">
+        <div class="vortex"></div>
+        <p class="text-blue-400 text-[10px] mt-3 font-bold uppercase tracking-[0.2em] animate-pulse text-center">Scanning Event Horizon...</p>
+    </div>
+
+    <!-- Fixed Footer Input Area -->
+    <footer class="fixed bottom-0 w-full p-4 bg-gradient-to-t from-black via-black/95 to-transparent z-[2000] overflow-visible">
+        <div class="max-w-4xl mx-auto space-y-3 overflow-visible">
+            
+            <!-- LLM Selector -->
+            <div class="flex items-center gap-2 relative overflow-visible">
+                <i class="fas fa-microchip text-blue-500 text-xs"></i>
+                <select id="llm-selector" class="llm-dropdown-style">
+                    <option value="Auto-Select" style="background:#000; color:#fff;">⚡ Auto-Select (Smart Routing)</option>
+                    {% if catalog %}
+                        {% for category_name, subcategories in catalog.items() %}
+                            <optgroup label="{{ category_name }}" class="group-style" style="background:#111; color:#3b82f6;">
+                                {% for sub_label, models in subcategories.items() %}
+                                    {% for model in models %}
+                                        <option value="{{ model }}" style="background:#000; color:#fff;">
+                                            {{ sub_label }}: {{ model }}
+                                        </option>
+                                    {% endfor %}
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- Input Box -->
+            <div class="relative bg-[#0d0d0d] border border-gray-800 rounded-2xl p-2 focus-within:border-blue-600 transition-all shadow-2xl">
+                <textarea id="user-input" rows="1" 
+                    class="w-full bg-transparent p-3 text-sm focus:outline-none resize-none placeholder-gray-600 text-white" 
+                    placeholder="Ask BlackHole AI..."></textarea>
+                
+                <div class="flex justify-between items-center px-2 pb-1">
+                    <div class="flex gap-4 text-gray-500 text-xs">
+                        <button class="hover:text-blue-400 transition-colors"><i class="fas fa-paperclip"></i></button>
+                        <button class="hover:text-blue-400 transition-colors"><i class="fas fa-globe"></i></button>
+                    </div>
+                    <button onclick="sendMessage()" id="send-btn" 
+                        class="bg-blue-600 hover:bg-blue-500 text-white w-10 h-10 rounded-xl transition-all flex items-center justify-center shadow-lg shadow-blue-900/20">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="text-[9px] text-center text-gray-600">Founded by Harshal Barge, IT Engineer. High-detail research mode active.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
